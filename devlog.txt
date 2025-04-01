@@ -1,2 +1,5 @@
 stellaY -- 2025-03-25 11:44
 Add devlog, flag, more github housekeeping
+
+stellaY -- 2025-04-01 11:40
+made login and signup templates, with themed navbar
