@@ -6,3 +6,7 @@ made login and signup templates, with themed navbar
 
 stellaY -- 2025-04-02 11:39
 add requirements.txt, update readme with  bare bones install guide
+
+evanC -- 2025-04-02 14:00
+- flask app can be hosted on virtual machine now
+- wsgi configs 
