@@ -3,3 +3,6 @@ Add devlog, flag, more github housekeeping
 
 moyoF -- 2025-04-01 11:40
 made login and signup templates, with themed navbar
+
+stellaY -- 2025-04-02 11:39
+add requirements.txt, update readme with  bare bones install guide
