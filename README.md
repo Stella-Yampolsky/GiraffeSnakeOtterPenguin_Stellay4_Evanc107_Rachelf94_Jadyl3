@@ -1,7 +1,7 @@
 # BitStrife by GiraffeSnakeOtterPenguin
+### Roster:
+Stella Yampolsky, Evan Chan, Moyo Fagbuyi, and Jady Lei
 
 
-# Install guide
-1. clone repository
-2. create venv
-3. pip install requirements.txt
+## Install Guide
+1. In Terminal/Powershell/Command Prompt, run the command `git clone`
