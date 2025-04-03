@@ -10,7 +10,8 @@ GiraffeSnakeOtterPenguin presents BitStrife!! Our web app aims to simulate a New
 
 ## Launch Codes
 **For Spinning BitStrife Up on Local Host**  
-1. **Making a Virtual Environment** (skip to step 2 if a virtual environment with the required modules is already made and can be used)  
+
+1. **Making a Virtual Environment** (skip to Step 2 if a virtual environment with the required modules is already made and can be used)  
   a. In ```Terminal/Powershell/Command Prompt```, run ```$ python3 -m venv [name]``` or ```$ py -m venv [name]``` on Windows.  
   b. Then after the virtual environment is made, activate it with ```$ . [name]/bin/activate``` or ```$ . [name]/Scripts/activate``` on Windows. The virtual environment has been activated if you can see the name of it within parentheses at the beginning of the command line.  
   c. Install the Flask module by navigating to this project's directory and running ```$ pip install -r requirements.txt```.  
