@@ -30,14 +30,14 @@ def addUser(username, password):
         return
     return "Username taken."
 def changeScore(username, score):
-    db = sqlite3.connect(USER_FILE)
+    db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     if (c.execute("SELECT 1 FROM users WHERE username=?", (username,))).fetchone() == None:
         return
     c.execute("UPDATE users SET score=? WHERE username=?", (score, username))
     db.commit()
 def incrementnumPlays(username):
-    db = sqlite3.connect(USER_FILE)
+    db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     if (c.execute("SELECT 1 FROM users WHERE username=?", (username,))).fetchone() == None:
         return
@@ -63,7 +63,7 @@ def checkPassword(username, password):
 def getUsernameFromID(uid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT username FROM users WHERE user_id =?", (uid,))
+    c.execute("SELECT username FROM users WHERE user_id=?", (uid,))
     if c.fetchone() == None:
         return "No such user"
     else:
@@ -71,7 +71,7 @@ def getUsernameFromID(uid):
 def getIDFromUsername(username):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT user_id FROM users WHERE username =?", (username,))
+    c.execute("SELECT user_id FROM users WHERE username=?", (username,))
     if c.fetchone() == None:
         return "No such user"
     else:
@@ -79,7 +79,7 @@ def getIDFromUsername(username):
 def getScoreFromID(uid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT score FROM users WHERE user_id =?", (uid,))
+    c.execute("SELECT score FROM users WHERE user_id=?", (uid,))
     if c.fetchone() == None:
         return "No such user"
     else:
@@ -87,7 +87,7 @@ def getScoreFromID(uid):
 def getScoreFromUsername(username):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT score FROM users WHERE username =?", (username,))
+    c.execute("SELECT score FROM users WHERE username=?", (username,))
     if c.fetchone() == None:
         return "No such user"
     else:
@@ -95,7 +95,7 @@ def getScoreFromUsername(username):
 def getnumPlaysFromUsername(username):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT numPlays FROM users WHERE username =?", (username,))
+    c.execute("SELECT numPlays FROM users WHERE username=?", (username,))
     if c.fetchone() == None:
         return "No such user"
     else:
@@ -129,10 +129,151 @@ def addPlay(username, name, address):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("INSERT INTO plays (user_id, player_id, name, age, health, mental_health, address, alcoholism, wage, spouse, children, education) VALUES (?, ?, ?)", (getIDFromUsername(username), getnumPlaysFromUsername(username) + 1, name, 0, 0, 0, address, 0, 0, 0, 0, 0))
+    incrementnumPlays(username)
     db.commit()
+
 def incrementAge(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
+        return
+    c.execute("UPDATE plays SET age=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, getAge(username, pid) + 1))
+    db.commit()
 def changeHealth(username, pid, change):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
+        return
+    c.execute("UPDATE plays SET health=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, getHealth(username, pid) + change))
+    db.commit()
 def changeMentalHealth(username, pid, change):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
+        return
+    c.execute("UPDATE plays SET mental_health=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, getAge(username, pid) + 1))
+    db.commit()
 def changeAddress(username, pid, newValue):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
+        return
+    c.execute("UPDATE plays SET mental_health=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, newValue))
+    db.commit()
 def changeAlcoholism(username, pid, newValue):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
+        return
+    c.execute("UPDATE plays SET alcoholism=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, newValue))
+    db.commit()
 def changeWage(username, pid, newValue):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
+        return
+    c.execute("UPDATE plays SET wage=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, newValue))
+    db.commit()
+def changeMaritialStatus(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
+        return
+    c.execute("UPDATE plays SET spouse=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, (getMaritialStatus(username, pid) + 1)%2))
+    db.commit()
+def changeChildCount(username, pid, change):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
+        return
+    c.execute("UPDATE plays SET children=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, getChildCount(username, pid) + change))
+    db.commit()
+def incrementEdu(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
+        return
+    c.execute("UPDATE plays SET education=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, getEducation(username, pid) + 1))
+    db.commit()
+
+#accessor functions
+def getName(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT name FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return 
+    else:
+        return c.fetchone()[0]
+def getAge(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT age FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return 
+    else:
+        return c.fetchone()[0]
+def getHealth(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT health FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return 
+    else:
+        return c.fetchone()[0]
+def getMentalHealth(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT mental_health FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return 
+    else:
+        return c.fetchone()[0]
+def getAddress(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT address FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return 
+    else:
+        return c.fetchone()[0]
+def getAlcoholism(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT alcoholism FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return 
+    else:
+        return c.fetchone()[0]
+def getWage(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT wage FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return 
+    else:
+        return c.fetchone()[0]
+def getMaritialStatus(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT spouse FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return 
+    else:
+        return c.fetchone()[0]
+def getChildCount(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT children FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return 
+    else:
+        return c.fetchone()[0]
+def getEducation(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT education FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return 
+    else:
+        return c.fetchone()[0]

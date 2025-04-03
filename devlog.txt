@@ -29,3 +29,6 @@ jadyL -- 2025-04-03 11:44
 
 moyoF -- 2025-04-03 11:45
 tried on apexcharts, problem sovling rendering and yeah
+
+jadyL -- 2025-04-03 13:17
+  added more functions to play table
