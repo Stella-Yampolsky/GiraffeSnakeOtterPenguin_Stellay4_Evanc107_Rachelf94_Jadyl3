@@ -15,7 +15,11 @@ add requirements.txt, update readme with  bare bones install guide
 
 evanC -- 2025-04-02 14:00
 - flask app can be hosted on virtual machine now
-- wsgi configs 
+- wsgi configs
 
 evanC -- 2025-04-02 23:27
 - README.md heading, description, installation guide, and launch codes for local hosting should be done
+
+jadyL -- 2025-04-03 11:44
+  added a numPlays to user table
+  started plays table
