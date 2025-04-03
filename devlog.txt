@@ -13,9 +13,15 @@ jadyL -- 2025-04-02 01:28
 stellaY -- 2025-04-02 11:39
 add requirements.txt, update readme with  bare bones install guide
 
+moyoF -- 2025-04-02 11:40
+moving bg for all pages
+
 evanC -- 2025-04-02 14:00
 - flask app can be hosted on virtual machine now
-- wsgi configs 
+- wsgi configs
 
 evanC -- 2025-04-02 23:27
 - README.md heading, description, installation guide, and launch codes for local hosting should be done
+
+moyoF -- 2025-04-03 11:45
+tried on apexcharts, problem sovling rendering and yeah
