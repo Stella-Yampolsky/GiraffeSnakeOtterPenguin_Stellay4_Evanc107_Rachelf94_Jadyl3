@@ -1,8 +1,14 @@
 stellaY -- 2025-03-25 11:44
 Add devlog, flag, more github housekeeping
 
+jadyL -- 2025-04-01 11:31
+  Add database code
+
 moyoF -- 2025-04-01 11:40
 made login and signup templates, with themed navbar
+
+jadyL -- 2025-04-02 01:28
+  Add database code
 
 stellaY -- 2025-04-02 11:39
 add requirements.txt, update readme with  bare bones install guide
