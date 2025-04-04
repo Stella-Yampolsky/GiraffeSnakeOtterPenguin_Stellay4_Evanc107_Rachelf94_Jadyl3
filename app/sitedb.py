@@ -202,7 +202,7 @@ def getName(username, pid):
     c = db.cursor()
     c.execute("SELECT name FROM plays WHERE user_id=? AND play_id=?", (username, pid))
     if c.fetchone() == None:
-        return 
+        return
     else:
         return c.fetchone()[0]
 def getAge(username, pid):
@@ -210,7 +210,7 @@ def getAge(username, pid):
     c = db.cursor()
     c.execute("SELECT age FROM plays WHERE user_id=? AND play_id=?", (username, pid))
     if c.fetchone() == None:
-        return 
+        return
     else:
         return c.fetchone()[0]
 def getHealth(username, pid):
@@ -218,7 +218,7 @@ def getHealth(username, pid):
     c = db.cursor()
     c.execute("SELECT health FROM plays WHERE user_id=? AND play_id=?", (username, pid))
     if c.fetchone() == None:
-        return 
+        return
     else:
         return c.fetchone()[0]
 def getMentalHealth(username, pid):
@@ -226,7 +226,7 @@ def getMentalHealth(username, pid):
     c = db.cursor()
     c.execute("SELECT mental_health FROM plays WHERE user_id=? AND play_id=?", (username, pid))
     if c.fetchone() == None:
-        return 
+        return
     else:
         return c.fetchone()[0]
 def getAddress(username, pid):
@@ -234,7 +234,7 @@ def getAddress(username, pid):
     c = db.cursor()
     c.execute("SELECT address FROM plays WHERE user_id=? AND play_id=?", (username, pid))
     if c.fetchone() == None:
-        return 
+        return
     else:
         return c.fetchone()[0]
 def getAlcoholism(username, pid):
@@ -242,7 +242,7 @@ def getAlcoholism(username, pid):
     c = db.cursor()
     c.execute("SELECT alcoholism FROM plays WHERE user_id=? AND play_id=?", (username, pid))
     if c.fetchone() == None:
-        return 
+        return
     else:
         return c.fetchone()[0]
 def getWage(username, pid):
@@ -250,7 +250,7 @@ def getWage(username, pid):
     c = db.cursor()
     c.execute("SELECT wage FROM plays WHERE user_id=? AND play_id=?", (username, pid))
     if c.fetchone() == None:
-        return 
+        return
     else:
         return c.fetchone()[0]
 def getMaritialStatus(username, pid):
@@ -258,15 +258,26 @@ def getMaritialStatus(username, pid):
     c = db.cursor()
     c.execute("SELECT spouse FROM plays WHERE user_id=? AND play_id=?", (username, pid))
     if c.fetchone() == None:
-        return 
+        return
     else:
         return c.fetchone()[0]
+def MaritialStatusToString(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT spouse FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return
+    else:
+        if c.fetchone()[0] == 0:
+            return "Single"
+        else:
+            return "Married"
 def getChildCount(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT children FROM plays WHERE user_id=? AND play_id=?", (username, pid))
     if c.fetchone() == None:
-        return 
+        return
     else:
         return c.fetchone()[0]
 def getEducation(username, pid):
@@ -274,6 +285,26 @@ def getEducation(username, pid):
     c = db.cursor()
     c.execute("SELECT education FROM plays WHERE user_id=? AND play_id=?", (username, pid))
     if c.fetchone() == None:
-        return 
+        return
     else:
         return c.fetchone()[0]
+def EducationStatusToString(username, pid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT education FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    if c.fetchone() == None:
+        return
+    else:
+        stat = c.fetchone()[0]
+        if stat  == 0:
+            return "Uneducated"
+        elif stat == 1:
+            return "Elementary School"
+        elif stat == 2:
+            return "Middle School"
+        elif stat == 3:
+            return "High School"
+        elif stat == 4:
+            return "College"
+        elif stat == 5:
+            return "Post-Grad"
