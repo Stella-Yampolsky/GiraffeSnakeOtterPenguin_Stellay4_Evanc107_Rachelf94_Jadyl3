@@ -41,3 +41,11 @@ added more templates, further looked at apexcharts
 
 moyoF -- 2025-04-06 20:45
 updated navbars with all pages, changed bg to sperm.gif
+
+evanC -- 2025-04-07 9:23
+- routed the flask routes to their templates
+- issues:
+	- signup route doesn't work
+	- should make all templates route back to login if username not in session
+	- profile redirects to profile/1 for now
+	- login GET/POST methods aren't aligned
