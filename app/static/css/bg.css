@@ -1,5 +1,5 @@
 /*moving background credit: Anon from TailwindFlex.com https://tailwindflex.com/@anonymous/background-animation*/
-
+ 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -67,13 +67,14 @@
 	overflow: hidden;
 }
 
-#icon li {
+.circles li {
 	position: absolute;
 	display: block;
 	list-style: none;
 	width: 20px;
 	height: 20px;
-	background: url("../bgSperm.gif");
+	background: url("../bgSperm.gif") no-repeat center center;
+	background-size: cover;
 	animation: animate 25s linear infinite;
 	bottom: -150px;
 }
@@ -153,6 +154,21 @@
 	animation-duration: 11s;
 }
 
+.circles li:nth-child(11) {
+	left: 15%;
+	width: 90px;
+	height: 90px;
+	animation-delay: 1s;
+	animation-duration: 20s;
+}
+.circles li:nth-child(12) {
+	left: 60%;
+	width: 40px;
+	height: 40px;
+	animation-delay: 5s;
+	animation-duration: 30s;
+}
+
 @keyframes animate {
 	0% {
 		transform: translateY(0);
@@ -169,14 +185,3 @@
 /*
 -- End BackGround Animation
 */
-
-@import url(https://fonts.googleapis.com/css?family=Roboto);
-
-body {
-  font-family: Roboto, sans-serif;
-}
-
-#chart {
-  max-width: 650px;
-  margin: 35px auto;
-}
