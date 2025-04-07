@@ -52,7 +52,7 @@ def incrementnumPlaysUID(uid):
 def checkPassword(username, password):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT city FROM users WHERE username=?", (username,))
+    c.execute("SELECT username FROM users WHERE username=?", (username,))
     if c.fetchone() == None:
         return False
     c.execute("SELECT password FROM users WHERE username=?", (username,))

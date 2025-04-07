@@ -8,12 +8,14 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 
 @app.route('/')
 def landing():
+    createUsers()
     if 'username' in session:
         return redirect(url_for('home'))
     else: return redirect(url_for('login'))
 
 @app.route('/home')
 def home():
+    createUsers()
     if "username" not in session:
         return redirect(url_for('login'))
     return render_template('home.html', username=session["username"])
@@ -24,10 +26,13 @@ def game():
 
 @app.route('/leaderboard')
 def leaderboard():
+    if 'username' not in session:
+        return redirect(url_for('login'))
     return render_template('leaderboard.html')
 
 @app.route("/login", methods=["GET", "POST"])# will code registering and logging forms later
 def login():
+    createUsers()
     if 'username' in session:
         return redirect("/home")
 
@@ -59,6 +64,7 @@ def self():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    createUsers()
     if request.method =="POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -83,4 +89,5 @@ def logout():
     return redirect(url_for('home'))
 
 if __name__ == '__main__':
+    app.debug = True
     app.run(host='0.0.0.0')
