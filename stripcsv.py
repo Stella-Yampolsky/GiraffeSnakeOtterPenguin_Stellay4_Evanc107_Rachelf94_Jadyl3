@@ -1,36 +1,23 @@
 import pandas as pd
 
-df = pd.read_csv("HIV_AIDS_Diagnoses_by_Neighborhood__Sex__and_Race_Ethnicity_20250403.csv")
+hvi = pd.read_csv("HVI_rankings.csv")
+modzcta = pd.read_csv("MODZCTA.csv")
+zipcodes = pd.read_csv("NYC_zipcodes.csv")
 
-colsToConvert = [
-    "TOTAL NUMBER OF HIV DIAGNOSES",
-    "HIV DIAGNOSES PER 100,000 POPULATION",
-    "TOTAL NUMBER OF CONCURRENT HIV/AIDS DIAGNOSES"
-]
+hvi["ZIP Code Tabulation Area (ZCTA) 2020"] = hvi["ZIP Code Tabulation Area (ZCTA) 2020"].astype(str)
+modzcta["ZCTA"] = modzcta["ZCTA"].astype(str)
+modzcta["MODZCTA"] = modzcta["MODZCTA"].astype(str)
+zipcodes["ZIP Codes"] = zipcodes["ZIP Codes"].astype(str)
 
-for col in colsToConvert:
-    df[col] = pd.to_numeric(df[col], errors="coerce")
+merged = hvi.merge(modzcta, left_on="ZIP Code Tabulation Area (ZCTA) 2020", right_on="ZCTA", how="left")
+merged = merged.merge(zipcodes, left_on="MODZCTA", right_on="ZIP Codes", how="left")
+'''
+merged["HVI_normalized"] = (
+    (merged["Heat Vulnerability Index (HVI)"] - merged["Heat Vulnerability Index (HVI)"].min())
+    / (merged["Heat Vulnerability Index (HVI)"].max() - merged["Heat Vulnerability Index (HVI)"].min())
+)
+'''
+output = merged[["Neighborhood", "Heat Vulnerability Index (HVI)"]].dropna().drop_duplicates()
+output.columns = ["neighborhood", "hvi"]
 
-df2013 = df[df["YEAR"] == 2013]
-df2013 = df2013[
-    (df2013["TOTAL NUMBER OF HIV DIAGNOSES"] > 0) &
-    (df2013["TOTAL NUMBER OF CONCURRENT HIV/AIDS DIAGNOSES"] >= 0) &
-    (df2013["HIV DIAGNOSES PER 100,000 POPULATION"] > 0)
-]
-
-grouped = df2013.groupby("Neighborhood (U.H.F)").agg({
-    "HIV DIAGNOSES PER 100,000 POPULATION": "mean",
-    "TOTAL NUMBER OF HIV DIAGNOSES": "sum",
-    "TOTAL NUMBER OF CONCURRENT HIV/AIDS DIAGNOSES": "sum"
-}).reset_index()
-
-grouped["probabilityOfHIV"] = grouped["HIV DIAGNOSES PER 100,000 POPULATION"] / 100000
-grouped["probabilityOfHIVtoAIDS"] = grouped["TOTAL NUMBER OF CONCURRENT HIV/AIDS DIAGNOSES"] / grouped["TOTAL NUMBER OF HIV DIAGNOSES"]
-
-result = grouped[[
-    "Neighborhood (U.H.F)",
-    "probabilityOfHIV",
-    "probabilityOfHIVtoAIDS"
-]]
-
-result.to_csv("hiv_probabilities_2013.csv", index=False)
+output.to_csv("neighborhood_hvi_probabilities.csv", index=False)
