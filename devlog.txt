@@ -53,5 +53,8 @@ evanC -- 2025-04-07 9:23
 stellaY -- 2025-04-07 10:13
 Pushed one modified csv file to main, contains probabilities of contracting HIV for each neighborhood, and the probability of HIV turning to AIDS for each neighborhood
 
+jadyL -- 2025-04-07 10:20
+    found more databases to use
+
 stellaY -- 2025-04-07 2:27
 Pushed modified hvi rankings file, contains hvi rankings for each neighborhood
