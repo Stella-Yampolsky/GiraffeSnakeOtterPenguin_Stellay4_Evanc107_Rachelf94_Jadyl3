@@ -58,3 +58,9 @@ jadyL -- 2025-04-07 10:20
 
 stellaY -- 2025-04-07 2:27
 Pushed modified hvi rankings file, contains hvi rankings for each neighborhood
+
+DESIGN REVISIONS THUS FAR:
+------------------------------------
+-changed datasets
+-changed database plan
+====================================
