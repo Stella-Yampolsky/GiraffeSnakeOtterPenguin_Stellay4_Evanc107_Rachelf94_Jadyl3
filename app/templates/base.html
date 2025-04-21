@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+  Giraffesnakeotterpenguin: Stella Y., Evan C., Moyo F., Jady L.
+  SoftDev
+  P04: Bit Strife
+  TBD
+  Time Spent: 4/6 hours
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Bit Strife{% endblock %}</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <link rel="stylesheet" href="../static/css/bg.css">
+    </head>
+    <!--Background Animation Body-->
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <nav class="bg-[#e53000] border-b-8 border-double border-b-[#fa3e0c] dark:bg-[#e53000]">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto">
+            <div class="flex justify-normal size-40">
+            <a href="/home" class="self-center text-xl font-[Avenir] font-semibold whitespace-nowrap dark:text-white">
+                <img src="../static/logo.png"/>
+            </a>
+            </div>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul class="font-[Avenir] font-medium text-2xl flex flex-col md:p-0 mt-4 bg-[#e53000] md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 dark:bg-[#e53000]">
+                <li>
+                    <a href="/leaderboard" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-yellow-400 md:p-0 dark:text-white md:dark:hover:text-yellow-400  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Leaderboard</a>
+                </li>
+                <!-- dropdown with other redriects -->
+                <li class="relative group">
+                    <button class="inline-flex w-full justify-center rounded-lg bg-white text-sm font-semibold px-3 py-2 text-gray-900 hover:bg-gray-50">
+                    Explore
+                    <svg class="ml-1 w-5 h-5 text-gray-400 group-hover:text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z" clip-rule="evenodd"/>
+                    </svg>
+                    </button>
+                    <div class="absolute z-10 hidden group-hover:block mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-white-700">
+                    <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 dark:text-black hover:bg-gray-100 dark:hover:bg-yellow-400">Profile</a>
+                    <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 dark:text-black hover:bg-gray-100 dark:hover:bg-yellow-400">Logout</a>
+                    </div>
+                </li>
+            </ul>
+            </div>
+        </div>
+    </nav>
+<body class="bg-gray-100">
+    {% block content %}{% endblock %}
+</body>
+</html>
