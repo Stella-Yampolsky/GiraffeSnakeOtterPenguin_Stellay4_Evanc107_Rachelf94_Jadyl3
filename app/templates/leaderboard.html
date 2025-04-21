@@ -16,12 +16,14 @@
   </head>
   <body>
     <!-- nav + bg -->
+    {% block links %}
+    {% endblock %}
     {% extends 'base.html' %}
     {% block content %}
     leaderboard :D
     <div id="chart"></div>
 
-    <!-- <script>
+    <script>
       const healthData =
       const options = {
         chart: {
@@ -36,10 +38,10 @@
           type: 'category'
         }
       };
-  
+
       const chart = new ApexCharts(document.querySelector("#chart"), options);
       chart.render();
-    </script> -->
+    </script>
     {% endblock %}
   </body>
 </html>

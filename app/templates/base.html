@@ -52,6 +52,8 @@
                     </svg>
                     </button>
                     <div class="absolute z-10 hidden group-hover:block mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-white-700">
+                      {% block links %}
+                      {% endblock %}
                     <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 dark:text-black hover:bg-gray-100 dark:hover:bg-yellow-400">Profile</a>
                     <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 dark:text-black hover:bg-gray-100 dark:hover:bg-yellow-400">Logout</a>
                     </div>
