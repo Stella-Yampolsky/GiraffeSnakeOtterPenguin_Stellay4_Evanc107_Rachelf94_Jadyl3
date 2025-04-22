@@ -46,7 +46,7 @@ def login():
 
         if checkPassword(username, password):# if password is correct, given user exists
             session["username"] = username# adds user to session
-            session["user_id"] = getIDFromUsername(username)
+            # session["user_id"] = getIDFromUsername(username)
             return redirect("/home")
 
         else:# if password isnt correct
