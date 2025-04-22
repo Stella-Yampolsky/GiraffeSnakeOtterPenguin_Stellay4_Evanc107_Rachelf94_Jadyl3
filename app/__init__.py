@@ -46,6 +46,7 @@ def login():
 
         if checkPassword(username, password):# if password is correct, given user exists
             session["username"] = username# adds user to session
+            session["user_id"] = getIDFromUsername(username)
             return redirect("/home")
 
         else:# if password isnt correct
@@ -56,7 +57,7 @@ def login():
 
 @app.route('/profile/<int:user_id>')
 def search():
-    return render_template('profile.html') #change later
+    return render_template('profile.html', username=session["username"], playtable=gamesInfoToTable(session["username"])) #change later
 
 @app.route('/profile')
 def self():

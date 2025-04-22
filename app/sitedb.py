@@ -200,7 +200,7 @@ def incrementEdu(username, pid):
 def getName(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT name FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT name FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -208,7 +208,7 @@ def getName(username, pid):
 def getAge(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT age FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT age FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -216,7 +216,7 @@ def getAge(username, pid):
 def getHealth(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT health FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT health FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -224,7 +224,7 @@ def getHealth(username, pid):
 def getMentalHealth(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT mental_health FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT mental_health FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -232,7 +232,7 @@ def getMentalHealth(username, pid):
 def getAddress(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT address FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT address FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -240,7 +240,7 @@ def getAddress(username, pid):
 def getAlcoholism(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT alcoholism FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT alcoholism FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -248,7 +248,7 @@ def getAlcoholism(username, pid):
 def getWage(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT wage FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT wage FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -256,7 +256,7 @@ def getWage(username, pid):
 def getMaritialStatus(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT spouse FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT spouse FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -264,7 +264,7 @@ def getMaritialStatus(username, pid):
 def MaritialStatusToString(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT spouse FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT spouse FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -275,7 +275,7 @@ def MaritialStatusToString(username, pid):
 def getChildCount(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT children FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT children FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -283,7 +283,7 @@ def getChildCount(username, pid):
 def getEducation(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT education FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT education FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -291,7 +291,7 @@ def getEducation(username, pid):
 def EducationStatusToString(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT education FROM plays WHERE user_id=? AND play_id=?", (username, pid))
+    c.execute("SELECT education FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     if c.fetchone() == None:
         return
     else:
@@ -308,3 +308,28 @@ def EducationStatusToString(username, pid):
             return "College"
         elif stat == 5:
             return "Post-Grad"
+# return game information
+def getGamesInfo(username):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT * FROM plays WHERE user_id=?", (getIDFromUsername(username),))
+    return c.fetchall()
+def gamesInfoToTable(games):
+    i = 0
+    output = "<table>"
+    output += "<tr> <th>Play Number</th> <th>Name</th> <th>Age</th> <th>Address</th> <th>Alcoholism</th> <th>Wage</th> <th>Married</th> <th>Children</th> <th>Education</th></tr>"
+    while len(games[i]) != 0:
+        output += "<tr>"
+        output += "<td>" + games[i][1] + "</td>" # play num
+        output += "<td>" + games[i][3] + "</td>" # name
+        output += "<td>" + games[i][4] + "</td>" # age
+        output += "<td>" + games[i][7] + "</td>" # address
+        output += "<td>" + games[i][8] + "</td>" # alcoholism
+        output += "<td>" + games[i][9] + "</td>" # wage
+        output += "<td>" + MaritialStatusToString(games[i][0], games[i][1]) + "</td>" # spouse
+        output += "<td>" + games[i][11] + "</td>" # children
+        output += "<td>" + EducationStatusToString(games[i][0], games[i][1]) + "</td>" # education
+        output += "</tr>"
+        i += 1
+    output += "</table>"
+    return output
