@@ -35,6 +35,48 @@
       </button>
     </div>
     {% endblock %}
+    <script>
+
+      fetch('../hiv_probabilities_2013.csv')
+    .then(response => response.text())
+    .then(csv => {
+      const { categories, data } = parseCSV(csv);
+      renderChart(categories, data);
+    });
+    
+      function parseCSV(text) {
+        const rows = text.trim().split('\n').map(row => row.split(','));
+        const categories = [];
+        const data = [];
+    
+        // Assuming format: Label,Value
+        for (let i = 1; i < rows.length; i++) {
+          categories.push(rows[i][0]);
+          data.push(parseFloat(rows[i][1]));
+        }
+    
+        return { categories, data };
+      }
+    
+      function renderChart(categories, data) {
+        const options = {
+          chart: {
+            type: 'bar',
+            height: 400
+          },
+          series: [{
+            name: 'Values',
+            data: data
+          }],
+          xaxis: {
+            categories: categories
+          }
+        };
+    
+        const chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+      }
+    </script>
   </body>
 
 </html>
