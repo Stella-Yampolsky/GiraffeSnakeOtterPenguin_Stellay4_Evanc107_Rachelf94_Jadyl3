@@ -20,4 +20,11 @@ GiraffeSnakeOtterPenguin presents BitStrife!! Our web app aims to simulate a New
   a. Activate the virtual environment.  
   b. Enter the app folder with ```$ cd app``` while in this project's directory.  
   c. Run the flask app using ```$ python3 __init__.py``` or ```$ py __init__.py``` for Windows.  
-  d. Enter ```http://127.0.0.1:5000``` in your web browser to access the web app.  
+  d. Enter ```http://127.0.0.1:5000``` in your web browser to access the web app.
+
+### FEATURE SPOTLIGHT
+* blah blah in file ___
+* yadda yadda at line x in file foo...
+
+### KNOWN BUGS/ISSUES
+* must run python3 app/__init__.py to utilize databases correctly
