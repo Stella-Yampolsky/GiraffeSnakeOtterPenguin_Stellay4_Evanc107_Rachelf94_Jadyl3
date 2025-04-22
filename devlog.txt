@@ -66,6 +66,9 @@ jadyL -- 2025-04-21 21:33
     fix sitedb functions using the wrong paramaters
     table for profile
 
+jadyL -- 2025-04-21 21:33
+    register was being weird. turns out sqlite makes the db file in the folder where the process was called. Changed location to "app/databse.db"
+
 DESIGN REVISIONS THUS FAR:
 ------------------------------------
 -changed datasets

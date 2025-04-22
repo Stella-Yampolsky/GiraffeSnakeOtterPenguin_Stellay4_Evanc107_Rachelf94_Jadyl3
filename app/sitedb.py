@@ -4,7 +4,7 @@
 
 import sqlite3
 
-DB_FILE="databse.db"
+DB_FILE="app/databse.db"
 
 def createTables():
     createUsers()
