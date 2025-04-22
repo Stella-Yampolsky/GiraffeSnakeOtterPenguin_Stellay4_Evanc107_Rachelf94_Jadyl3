@@ -27,4 +27,4 @@ GiraffeSnakeOtterPenguin presents BitStrife!! Our web app aims to simulate a New
 * yadda yadda at line x in file foo...
 
 ### KNOWN BUGS/ISSUES
-* must run python3 app/\__\init__.py to utilize databases correctly
+* must run python3 app/\_\_init__.py to utilize databases correctly
