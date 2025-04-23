@@ -105,6 +105,18 @@ jadyL -- 2025-04-21 21:33
 jadyL -- 2025-04-21 11:50
     fix sitedb functions again, dropdown fix, w database
 
+evanC -- 2025-04-23 00:56
+- bitlife.html added
+	- scrollable canvas 
+	- 100 random first and last names 
+	- 15 actions added to the activity pool 
+	- aging function where actions are done with every "age up" and death rates increase as you get older
+	- animating bargraph ui and aging button ui
+	- various helper functions to aid animating, rng, and other canvas context imaging
+	- four variating bars (survival rate, happiness, looks, and mental)
+	- scalable canvas to accomodate wcag zoom guidelines when zooming in/out and when the tab is resized
+	- reduced memory usage
+
 DESIGN REVISIONS THUS FAR:
 ------------------------------------
 -changed datasets
