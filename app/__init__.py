@@ -8,7 +8,7 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 
 @app.route('/')
 def landing():
-    createUsers()
+    createTables()
     if 'username' in session:
         return redirect(url_for('home'))
     else: return redirect(url_for('login'))
@@ -53,6 +53,7 @@ def login():
         if checkPassword(username, password):# if password is correct, given user exists
             session["username"] = username# adds user to session
             # session["user_id"] = getIDFromUsername(username)
+            user_id = 1
             return redirect("/home")
 
         else:# if password isnt correct
@@ -62,8 +63,8 @@ def login():
     return render_template("login.html")# if GET request, just renders login page
 
 @app.route('/profile/<int:user_id>')
-def search():
-    return render_template('profile.html', username=session["username"], playtable=gamesInfoToTable(session["username"])) #change later
+def search(user_id):
+    return render_template('profile.html', username=session["username"], playtable=gamesInfoToTable(getGamesInfo(session["username"]))) #change later
 
 @app.route('/profile')
 def self():

@@ -72,34 +72,22 @@ def getIDFromUsername(username):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT user_id FROM users WHERE username=?", (username,))
-    if c.fetchone() == None:
-        return "No such user"
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getScoreFromID(uid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT score FROM users WHERE user_id=?", (uid,))
-    if c.fetchone() == None:
-        return "No such user"
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getScoreFromUsername(username):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT score FROM users WHERE username=?", (username,))
-    if c.fetchone() == None:
-        return "No such user"
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getnumPlaysFromUsername(username):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT numPlays FROM users WHERE username=?", (username,))
-    if c.fetchone() == None:
-        return "No such user"
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getnumPlaysFromID(uid):
     return getnumPlaysFromUsername(getUsernameFromID(uid))
 
@@ -201,74 +189,48 @@ def getName(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT name FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
-        return
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getAge(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT age FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
-        return
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getHealth(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT health FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
-        return
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getMentalHealth(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT mental_health FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
-        return
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getAddress(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT address FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
-        return
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getAlcoholism(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT alcoholism FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
-        return
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getWage(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT wage FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
-        return
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getMaritialStatus(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT spouse FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
-        return
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def MaritialStatusToString(username, pid):
-    db = sqlite3.connect(DB_FILE)
-    c = db.cursor()
-    c.execute("SELECT spouse FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
+    status = getMaritialStatus(username, pid)
+    if status == None:
         return
     else:
-        if c.fetchone()[0] == 0:
+        if status == 0:
             return "Single"
         else:
             return "Married"
@@ -276,26 +238,18 @@ def getChildCount(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT children FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
-        return
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def getEducation(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT education FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
-        return
-    else:
-        return c.fetchone()[0]
+    return c.fetchone()[0]
 def EducationStatusToString(username, pid):
-    db = sqlite3.connect(DB_FILE)
-    c = db.cursor()
-    c.execute("SELECT education FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
-    if c.fetchone() == None:
+    status = getEducation(username, pid)
+    if status == None:
         return
     else:
-        stat = c.fetchone()[0]
+        stat = status
         if stat  == 0:
             return "Uneducated"
         elif stat == 1:
@@ -318,18 +272,19 @@ def gamesInfoToTable(games):
     i = 0
     output = "<table>"
     output += "<tr> <th>Play Number</th> <th>Name</th> <th>Age</th> <th>Address</th> <th>Alcoholism</th> <th>Wage</th> <th>Married</th> <th>Children</th> <th>Education</th></tr>"
-    while len(games[i]) != 0:
-        output += "<tr>"
-        output += "<td>" + games[i][1] + "</td>" # play num
-        output += "<td>" + games[i][3] + "</td>" # name
-        output += "<td>" + games[i][4] + "</td>" # age
-        output += "<td>" + games[i][7] + "</td>" # address
-        output += "<td>" + games[i][8] + "</td>" # alcoholism
-        output += "<td>" + games[i][9] + "</td>" # wage
-        output += "<td>" + MaritialStatusToString(games[i][0], games[i][1]) + "</td>" # spouse
-        output += "<td>" + games[i][11] + "</td>" # children
-        output += "<td>" + EducationStatusToString(games[i][0], games[i][1]) + "</td>" # education
-        output += "</tr>"
-        i += 1
+    if len(games) > 0:
+        while len(games[i]) != 0:
+            output += "<tr>"
+            output += "<td>" + games[i][1] + "</td>" # play num
+            output += "<td>" + games[i][3] + "</td>" # name
+            output += "<td>" + games[i][4] + "</td>" # age
+            output += "<td>" + games[i][7] + "</td>" # address
+            output += "<td>" + games[i][8] + "</td>" # alcoholism
+            output += "<td>" + games[i][9] + "</td>" # wage
+            output += "<td>" + MaritialStatusToString(games[i][0], games[i][1]) + "</td>" # spouse
+            output += "<td>" + games[i][11] + "</td>" # children
+            output += "<td>" + EducationStatusToString(games[i][0], games[i][1]) + "</td>" # education
+            output += "</tr>"
+            i += 1
     output += "</table>"
     return output
