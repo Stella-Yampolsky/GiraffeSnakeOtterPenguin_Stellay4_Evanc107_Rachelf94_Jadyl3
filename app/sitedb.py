@@ -64,10 +64,7 @@ def getUsernameFromID(uid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT username FROM users WHERE user_id=?", (uid,))
-    if c.fetchone() == None:
-        return "No such user"
-    else:
-        return c.fetchone()[0]
+    c.fetchone()[0]
 def getIDFromUsername(username):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
@@ -263,10 +260,10 @@ def EducationStatusToString(username, pid):
         elif stat == 5:
             return "Post-Grad"
 # return game information
-def getGamesInfo(username):
+def getGamesInfo(uid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT * FROM plays WHERE user_id=?", (getIDFromUsername(username),))
+    c.execute("SELECT * FROM plays WHERE user_id=?", (uid,))
     return c.fetchall()
 def gamesInfoToTable(games):
     i = 0

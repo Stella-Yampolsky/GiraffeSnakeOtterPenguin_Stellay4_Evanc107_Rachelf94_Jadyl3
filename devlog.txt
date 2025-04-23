@@ -71,6 +71,10 @@ jadyL -- 2025-04-21 21:33
 
 stellaY -- 2025-04-22 17:37
     Add schools.csv
+
+jadyL -- 2025-04-21 21:33
+    fix sitedb functions to get profile working properly
+
 DESIGN REVISIONS THUS FAR:
 ------------------------------------
 -changed datasets
