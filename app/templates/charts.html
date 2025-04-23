@@ -2,9 +2,12 @@
     {% block content %}
     <!-- seperate divs or they like
     hop ontop of one anotehr -->
-    <div id="hoodChart"></div>
-    <div id="aidsChart"></div>
-    <div id="rateChart"></div>
+    <div id="hoodChart" class="border-4 rounded-lg border-gray p-8 bg-[#fa3e0c] "></div>
+    <br>
+    <div id="rateChart" class="border-4 rounded-lg border-gray p-4 bg-[#fa3e0c] "></div>
+    <br>
+    <div id="aidsChart" class="border-4 rounded-lg border-gray p-4 bg-[#fa3e0c] "></div>
+    <!-- <div id="eachChart" class="border-4 rounded-lg border-gray p-4 bg-[#fa3e0c] "></div> -->
     <script>
     window.addEventListener('load', function () 
     {
@@ -13,13 +16,6 @@
             const chartData = hivByHoodFormat(data);
             hivByHood(chartData);
             }
-            );
-
-        parse("{{ url_for('static', filename='hiv_probabilities_2013.csv') }}", (data) =>
-        { 
-            const chartData = hivProbFormat(data);
-            hivProb(chartData);
-        }
             );
     });
     </script>
@@ -47,7 +43,7 @@
             );
         });
     </script>
-    <!-- <br>
+    <br>
     <script>
         window.addEventListener('load', function () 
         {
