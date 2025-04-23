@@ -37,12 +37,17 @@
         var sStart;
         var sLength;
         var scrollAmt;
+        var maxScroll;
 
         //data work
         var deathRates
+        var firstNames
+        var lastNames
 
         function setupData(){
             deathRates = [0.0002,0.00021111111111111112,0.00022222222222222223,0.00023333333333333335,0.00024444444444444444,0.0002555555555555556,0.00026666666666666665,0.0002777777777777778,0.0002888888888888889,0.0003,0.00033,0.00036,0.00039,0.00042,0.00045,0.00048,0.00051,0.00054,0.00057,0.0006,0.0006666666666666666,0.0007333333333333333,0.0008,0.0008666666666666666,0.0009333333333333333,0.001,0.0010666666666666666,0.0011333333333333334,0.0012,0.0012666666666666668,0.0013333333333333335,0.0014,0.0014666666666666666,0.0015333333333333334,0.0016,0.0016666666666666668,0.0017333333333333332,0.0018,0.0018666666666666668,0.0019333333333333335,0.002,0.0022,0.0024,0.0026,0.0028,0.003,0.0032,0.00356,0.00392,0.00428,0.00464,0.005,0.00536,0.00572,0.00608,0.00644,0.0068,0.00768,0.00856,0.00944,0.01032,0.0112,0.01208,0.01296,0.01384,0.01472,0.0156,0.01884,0.02208,0.02532,0.02856,0.0318,0.03504,0.03828,0.04152,0.04476,0.048,0.0532,0.0584,0.0636,0.0688,0.074,0.0792,0.0844,0.0896,0.0948,0.1,0.11176470588235294,0.12352941176470588,0.13529411764705882,0.14705882352941177,0.1588235294117647,0.17058823529411765,0.18235294117647058,0.19411764705882352,0.20588235294117646,0.21764705882352942,0.22941176470588234,0.2411764705882353,0.2529411764705882,0.2647058823529412,0.27647058823529413,0.28823529411764703,0.29999999999999993];
+            firstNames = ["Liam", "Olivia", "Noah", "Emma", "Oliver", "Ava", "Elijah", "Sophia", "James", "Isabella", "William", "Mia", "Benjamin", "Amelia", "Lucas", "Harper", "Henry", "Evelyn", "Alexander", "Abigail", "Michael", "Ella", "Ethan", "Elizabeth", "Daniel", "Camila", "Jacob", "Luna", "Logan", "Sofia", "Jackson", "Avery", "Levi", "Mila", "Sebastian", "Aria", "Mateo", "Scarlett", "Jack", "Penelope", "Owen", "Layla", "Theodore", "Chloe", "Aiden", "Victoria", "Samuel", "Madison", "Joseph", "Eleanor", "John", "Grace", "David", "Nora", "Wyatt", "Riley", "Matthew", "Zoey", "Luke", "Lily", "Asher", "Hannah", "Carter", "Lillian", "Julian", "Addison", "Grayson", "Aubrey", "Leo", "Ellie", "Jayden", "Stella", "Gabriel", "Natalie", "Isaac", "Zoe", "Lincoln", "Leah", "Anthony", "Hazel", "Hudson", "Violet", "Dylan", "Aurora", "Ezra", "Savannah", "Thomas", "Audrey", "Charles", "Brooklyn", "Christopher", "Bella", "Jaxon", "Claire", "Maverick", "Skylar", "Josiah", "Lucy", "Isaiah", "Paisley", "Andrew", "Everly", "Elias", "Anna"];
+            lastNames = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Young", "Walker", "Hall", "Allen", "King", "Scott", "Green", "Baker", "Adams", "Nelson", "Hill", "Carter", "Mitchell", "Roberts", "Garrett", "Gomez", "Perez", "Morris", "Murphy", "Rogers", "Reed", "Cook", "Morgan", "Bell", "Bailey", "Cooper", "Richardson", "Ward", "Wood", "Hughes", "Washington", "Wright", "Lopez", "Hill", "Mitchell", "Cameron", "Sanders", "Price", "Rivera", "Parker", "Morris", "Evans", "Flores", "Nguyen", "Grant", "Knight", "Bennett", "Sullivan", "Simpson", "Graham", "Foster", "Gibson", "Bryant", "Alexander", "Russell", "Chavez", "Shaw", "Williamson", "Davidson", "Curtis", "Maxwell", "Mason", "Fernandez", "Harrison", "Douglas", "Snyder", "Mendoza", "Morales", "Chavez", "Burke", "Stewart", "Simmons", "Ross", "James", "Woodward", "Kingston", "Williamson", "Carlson", "Douglas", "Hunter", "Hudson", "Patterson"];
 
         }//setupData
 
@@ -57,18 +62,19 @@
             age = 0;
             frameCount = 0;
             dead = false;
-            name = "Evan Chan";
+            name = firstNames[getRandomInt(0,firstNames.length-1)]+ " "+lastNames[getRandomInt(0,lastNames.length-1)];
             story = [];
 
             charts = [];
             charts.length = 2;
             charts[0] = new Chart('Survival', 100-deathRates[age]);
-            charts[1] = new Chart('Poopy', 14.3)
+            charts[1] = new Chart('Happiness', 100)
 
             sMarginX = cWidth/18;
             scrollAmt = 0;
             sLength = cHeight*.64;
             sStart = [sMarginX,(cHeight*0.11)];
+            maxScroll = [0,cHeight*0.75];
         }//resetGame
 
         var board = {
@@ -113,6 +119,10 @@
             board.c.width = cWidth;
 
             ageButton = [cWidth*1/3,cHeight*0.80,ageButton[2]];
+
+            sMarginX = cWidth/18;
+            sStart = [sMarginX,(cHeight*0.14)];
+            maxScroll = [0,cHeight*0.75];
         }//resizeGameArea
 
         function display(){
@@ -178,7 +188,7 @@
             this.ctx.fillText("Age",cWidth*1/3,cHeight*0.87);
             fillRoundRect((cWidth*1/3)-(cWidth*0.0070)/2,cHeight*0.70,cWidth*0.0070,cHeight*0.13,cHeight/40);
             fillRoundRect((cWidth*1/3)-(cHeight*0.13)/2,cHeight*0.76,(cHeight*0.13),(cWidth*0.0070),cHeight/40);
-
+    
             this.ctx.fillStyle = "#03041a";
             this.ctx.textAlign = "left";
             this.ctx.textBaseline = "middle";
@@ -228,6 +238,7 @@
         function displayStory(){
             this.ctx = board.context;
             let typewriter = [sStart[0],sStart[1]+scrollAmt];
+            let counter = 0;
 
             this.ctx.fillStyle = "#03041a";
             let fontSize = cHeight/40;
@@ -245,14 +256,14 @@
                     }
                     this.ctx.fillText(story[i][n],typewriter[0],typewriter[1]);
                     typewriter[1]+=fontSize*1.25;
+                    counter+=1;
                 }
             }
-            
-            sLength = typewriter[1]-(cHeight*0.14);
-
+            if(counter*fontSize*1.25>cHeight*.45){
+                maxScroll[0] = sStart[1]-((counter+3)*fontSize*1.25)
+            }
 
             this.ctx.fillStyle = 'rgba(161, 161, 161, 5)';
-            fillRoundRect(cWidth*.595,cHeight*0.14,cWidth*0.01,cHeight*0.57,cHeight/40);
         }//displayStory
 
 
@@ -262,6 +273,7 @@
             if(age<100){
                 charts[0].changeStat(100-(deathRates[age]*100));
             }
+            charts[1].changeStat(charts[1].stat*.95);
 
             let d = 1000-(charts[0].stat*10);
             let n = getRandomInt(0,1000);
@@ -278,7 +290,6 @@
                 story.push(this.recap);
             }
 
-            console.log(sLength);
         }//ageUp
 
 
@@ -363,18 +374,20 @@
 
             if(mouseX>0&&mouseX<cWidth*(2/3)&&mouseY>cHeight*0.138&&mouseY<cHeight*0.75){
                 let amt = cHeight/100;
-                if (delta < 0) {//down
-                    if(sLength>scrollAmt+cHeight*0.64){
-                        scrollAmt+=amt;
+                if (delta < 0) {//up
+                    scrollAmt-=amt;
+                    if(scrollAmt<=maxScroll[0]){
+                        scrollAmt=maxScroll[0]
                     }
                 }
-                else {//up
-                    scrollAmt-=amt;
-                    if(scrollAmt <= 0){
-                        scrollAmt = 0;
+                else {//down
+                    scrollAmt+=amt;
+                    if(scrollAmt>maxScroll[1]-(cHeight*0.75)){
+                        scrollAmt=maxScroll[1]-(cHeight*0.75);
                     }
                 }
             }
+            console.log(scrollAmt, maxScroll[1]);
         });//scroll wheel
 
 
