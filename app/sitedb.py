@@ -175,12 +175,12 @@ def changeChildCount(username, pid, change):
         return
     c.execute("UPDATE plays SET children=? WHERE user_id=? AND play_id=?", ( getChildCount(username, pid) + change, getIDFromUsername(username), pid,))
     db.commit()
-def incrementEdu(username, pid):
+def incrementEdu(uid, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
+    if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (uid, pid))).fetchone() == None:
         return
-    c.execute("UPDATE plays SET education=? WHERE user_id=? AND play_id=?", (getEducation(username, pid) + 1, getIDFromUsername(username), pid, ))
+    c.execute("UPDATE plays SET education=? WHERE user_id=? AND play_id=?", (getEducation(uid, pid) + 1, uid, pid, ))
     db.commit()
 
 #accessor functions
@@ -219,10 +219,10 @@ def getWage(username, pid):
     c = db.cursor()
     c.execute("SELECT wage FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     return c.fetchone()[0]
-def getMaritialStatus(username, pid):
+def getMaritialStatus(uid, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT spouse FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
+    c.execute("SELECT spouse FROM plays WHERE user_id=? AND play_id=?", (uid, pid))
     return c.fetchone()[0]
 def MaritialStatusToString(username, pid):
     status = getMaritialStatus(username, pid)
@@ -238,13 +238,13 @@ def getChildCount(username, pid):
     c = db.cursor()
     c.execute("SELECT children FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
     return c.fetchone()[0]
-def getEducation(username, pid):
+def getEducation(uid, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("SELECT education FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))
+    c.execute("SELECT education FROM plays WHERE user_id=? AND play_id=?", (uid, pid))
     return c.fetchone()[0]
-def EducationStatusToString(username, pid):
-    status = getEducation(username, pid)
+def EducationStatusToString(uid, pid):
+    status = getEducation(uid, pid)
     if status == None:
         return
     else:
@@ -271,17 +271,17 @@ def gamesInfoToTable(games):
     i = 0
     output = "<table>"
     output += "<tr> <th>Play Number</th> <th>Name</th> <th>Age</th> <th>Address</th> <th>Alcoholism</th> <th>Wage</th> <th>Married</th> <th>Children</th> <th>Education</th></tr>"
-    if len(games) > 0:
-        while len(games[i]) != 0:
+    if len(games) > 0 and games != None:
+        while i < len(games):
             output += "<tr>"
-            output += "<td>" + games[i][1] + "</td>" # play num
-            output += "<td>" + games[i][3] + "</td>" # name
-            output += "<td>" + games[i][4] + "</td>" # age
-            output += "<td>" + games[i][7] + "</td>" # address
-            output += "<td>" + games[i][8] + "</td>" # alcoholism
-            output += "<td>" + games[i][9] + "</td>" # wage
+            output += "<td>" + str(games[i][1]) + "</td>" # play num
+            output += "<td>" + str(games[i][2]) + "</td>" # name
+            output += "<td>" + str(games[i][3]) + "</td>" # age
+            output += "<td>" + str(games[i][6]) + "</td>" # address
+            output += "<td>" + str(games[i][7]) + "</td>" # alcoholism
+            output += "<td>" + str(games[i][8]) + "</td>" # wage
             output += "<td>" + MaritialStatusToString(games[i][0], games[i][1]) + "</td>" # spouse
-            output += "<td>" + games[i][11] + "</td>" # children
+            output += "<td>" + str(games[i][10]) + "</td>" # children
             output += "<td>" + EducationStatusToString(games[i][0], games[i][1]) + "</td>" # education
             output += "</tr>"
             i += 1
