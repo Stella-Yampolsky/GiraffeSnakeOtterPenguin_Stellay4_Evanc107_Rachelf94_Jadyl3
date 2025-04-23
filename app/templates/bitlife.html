@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<!-- for gsop project -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>BitLife</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body onload = startGame()>
+
+    <script>
+        //sizing
+        var cHeight = 720;
+        var cWidth = 1280;
+        var bHeight;
+        var bWidth;
+        var canvasBound = [1280/2,1280*2]//1920x1080 is most common screen size, 200% zoomability is recommended for wcag guidelines
+
+        //animations
+        var frameCount;
+
+        //game logic stuffs
+        var age;
+        var name;
+        var story;
+        var dead;
+
+        //info stuffs
+        var charts;
+        var stats;
+
+        //UI
+        var ageButton = [0,0,"#0aad36"];//x,y,color
+
+        //log work
+        var sMargin;
+        var sStart;
+        var sLength;
+        var scrollAmt;
+
+        //data work
+        var deathRates
+
+        function setupData(){
+            deathRates = [0.0002,0.00021111111111111112,0.00022222222222222223,0.00023333333333333335,0.00024444444444444444,0.0002555555555555556,0.00026666666666666665,0.0002777777777777778,0.0002888888888888889,0.0003,0.00033,0.00036,0.00039,0.00042,0.00045,0.00048,0.00051,0.00054,0.00057,0.0006,0.0006666666666666666,0.0007333333333333333,0.0008,0.0008666666666666666,0.0009333333333333333,0.001,0.0010666666666666666,0.0011333333333333334,0.0012,0.0012666666666666668,0.0013333333333333335,0.0014,0.0014666666666666666,0.0015333333333333334,0.0016,0.0016666666666666668,0.0017333333333333332,0.0018,0.0018666666666666668,0.0019333333333333335,0.002,0.0022,0.0024,0.0026,0.0028,0.003,0.0032,0.00356,0.00392,0.00428,0.00464,0.005,0.00536,0.00572,0.00608,0.00644,0.0068,0.00768,0.00856,0.00944,0.01032,0.0112,0.01208,0.01296,0.01384,0.01472,0.0156,0.01884,0.02208,0.02532,0.02856,0.0318,0.03504,0.03828,0.04152,0.04476,0.048,0.0532,0.0584,0.0636,0.0688,0.074,0.0792,0.0844,0.0896,0.0948,0.1,0.11176470588235294,0.12352941176470588,0.13529411764705882,0.14705882352941177,0.1588235294117647,0.17058823529411765,0.18235294117647058,0.19411764705882352,0.20588235294117646,0.21764705882352942,0.22941176470588234,0.2411764705882353,0.2529411764705882,0.2647058823529412,0.27647058823529413,0.28823529411764703,0.29999999999999993];
+
+        }//setupData
+
+        function startGame(){
+            setupData();
+            resetGame();
+
+            board.start();
+        }//startGame
+
+        function resetGame(){
+            age = 0;
+            frameCount = 0;
+            dead = false;
+            name = "Evan Chan";
+            story = [];
+
+            charts = [];
+            charts.length = 2;
+            charts[0] = new Chart('Survival', 100-deathRates[age]);
+            charts[1] = new Chart('Poopy', 14.3)
+
+            sMarginX = cWidth/18;
+            scrollAmt = 0;
+            sLength = cHeight*.64;
+            sStart = [sMarginX,(cHeight*0.11)];
+        }//resetGame
+
+        var board = {
+            c : document.createElement("canvas"),
+            start : function() {
+                this.c.width = cWidth;
+                this.c.height = cHeight;
+                this.context = this.c.getContext("2d");
+                document.body.insertBefore(this.c, document.body.childNodes[0]);
+                this.frameNo = 0;
+                this.interval = setInterval(updateGameArea, 20);
+            },
+            clear : function() {
+                this.context.clearRect(0, 0, this.c.width, this.c.height);
+            }
+        }//board
+
+        function updateGameArea(){
+            frameCount++;
+
+            resizeGameArea();
+            display();
+        }//updateGameArea
+
+        function resizeGameArea(){
+            bWidth = window.innerWidth;
+            bHeight = window.innerHeight;
+
+            cWidth = (2/3)*bWidth;
+
+            if(cWidth>canvasBound[1]){
+                cWidth = canvasBound[1];
+            }
+            else if (cWidth<canvasBound[0]){
+                cWidth = canvasBound[0];
+                console.log(cWidth);
+            }
+
+            cHeight = (1080/1920)*cWidth;//keeps ratio of 1920:1080
+
+            board.c.height = cHeight;
+            board.c.width = cWidth;
+
+            ageButton = [cWidth*1/3,cHeight*0.80,ageButton[2]];
+        }//resizeGameArea
+
+        function display(){
+            this.ctx = board.context;
+            this.ctx.save();
+
+            //stats panel
+            this.ctx.fillStyle = "#f5f4f2";
+            fillRoundRect(cWidth*0.6,0,cWidth*0.3666,cHeight,cHeight/40);
+            this.ctx.fillRect(cWidth*2/3,0,cWidth/6,cHeight);
+
+            //game background
+            this.ctx.shadowColor = "#9c9c9c";
+            this.ctx.shadowBlur = 15;
+            this.ctx.fillStyle = "#f23f3f";
+            fillRoundRect(0,0,cWidth*2/3,cHeight,cHeight/40);
+            this.ctx.restore();
+            this.ctx.save();
+            this.ctx.fillStyle = "#f23f3f";
+            this.ctx.clearRect(0,0,cWidth/2,cHeight);
+            fillRoundRect(0,0,cWidth*6/10,cHeight,cHeight/40);
+
+            //ui+lifescreen
+            this.ctx.shadowColor = "#b52d2d";//red shadow
+            this.ctx.shadowBlur = 20;
+            this.ctx.shadowOffsetX = 0;
+            this.ctx.shadowOffsetY = 0;
+            this.ctx.fillStyle = "#f0f0f0";
+
+
+            this.ctx.fillRect(15,cHeight*3/4,(cWidth*2/3)-30,cHeight*0.1);//red shadow from bottom ui on red bg
+            this.ctx.fillRect(15,cHeight*0.05,(cWidth*2/3)-30,cHeight*0.05,cHeight/40);//red shadow from top ui on red bg
+            this.ctx.fillRect(cWidth/20,0,(cWidth*2/3)-(cWidth/20)*2,cHeight);//white life screen with red shadow on red bg
+
+            this.ctx.shadowColor = 'rgba(0,0,0,0)';
+            displayStory();
+            this.ctx.shadowColor = "#949494";
+
+            this.ctx.shadowColor = "#949494";//lifescreen and shadows on lifescreen
+            fillCircle(ageButton[0],ageButton[1],cWidth*0.08);
+            this.ctx.fillRect((cWidth*0.05)-7.5,cHeight*3/4,(cWidth*2/3)-(cWidth*0.1)+15,cHeight*0.1);
+            this.ctx.fillRect((cWidth*0.05)-10,cHeight*.05,(cWidth*2/3)-(cWidth*0.1)+20,cHeight*0.05);
+            this.ctx.fillStyle = "#e3e3e3";
+            this.ctx.shadowColor = 'rgba(0,0,0,0)';
+            
+
+            this.ctx.fillRect(0,cHeight*.05,(cWidth*2/3),cHeight*0.05);
+            fillRoundRect(0,-.5,cWidth*(2/3)+0.005,cHeight*0.1,cHeight/40);
+            this.ctx.fillRect(0,cHeight*6/8,cWidth*2/3,(cHeight*1/6));
+            this.ctx.clearRect(0,cHeight*.8,cWidth*0.2,cHeight*.2);
+            fillRoundRect(0,cHeight*6/8,cWidth*2/3,(cHeight*1/4)+1,cHeight/40);
+            fillCircle(ageButton[0],ageButton[1],cWidth*0.08);
+            this.ctx.fillStyle = ageButton[2];
+            fillCircle(ageButton[0],ageButton[1],cWidth*0.075);
+            this.ctx.fillStyle = "#e3e3e3";
+            fillCircle(ageButton[0],ageButton[1],cWidth*0.073);
+            this.ctx.fillStyle = ageButton[2];
+            fillCircle(ageButton[0],ageButton[1],cWidth*0.070);
+            this.ctx.fillStyle = "#e3e3e3";
+            this.ctx.textAlign = "center";
+            this.ctx.textBaseline = "middle";
+            this.ctx.font = "800 "+ cHeight/25 + "px Nunito";
+            this.ctx.fillText("Age",cWidth*1/3,cHeight*0.87);
+            fillRoundRect((cWidth*1/3)-(cWidth*0.0070)/2,cHeight*0.70,cWidth*0.0070,cHeight*0.13,cHeight/40);
+            fillRoundRect((cWidth*1/3)-(cHeight*0.13)/2,cHeight*0.76,(cHeight*0.13),(cWidth*0.0070),cHeight/40);
+
+            this.ctx.fillStyle = "#03041a";
+            this.ctx.textAlign = "left";
+            this.ctx.textBaseline = "middle";
+            this.fontSize = cWidth/60;
+            this.ctx.font = "650 "+ fontSize+'px Nunito';
+            this.ctx.fillText(name,cWidth/30,cHeight/25);
+            this.fontSize = cWidth/70;
+            this.ctx.font = "650 "+ fontSize+'px Nunito';
+            this.ctx.fillText("Age: "+age,cWidth/30,1.75*cHeight/25);
+
+            if(dead){
+                this.ctx.fillStyle = 'rgba(153, 42, 32, 50)';
+                fillRoundRect(0,0,cWidth*2/3,cHeight,cHeight/40);
+            }
+
+            
+            displayCharts();
+
+            this.ctx.restore();
+        }//display
+
+        function displayCharts(){//will add scroll bar later
+            this.ctx = board.context;
+
+            this.ctx.fillStyle = "#03041a";
+
+            this.ctx.textAlign = "center";
+            this.ctx.textBaseline = "middle";
+            this.fontSize = cWidth/40;
+            this.ctx.font = "650 "+ fontSize+'px Nunito';
+            this.ctx.fillText("Stats",cWidth*5/6,cHeight*1/10);
+
+            this.ctx.textAlign = "right";
+            this.fontSize = cWidth/70;
+            this.ctx.font = "800 "+ fontSize+'px Nunito';
+            for(i = 0;i<charts.length;i++){
+                if(frameCount%1==0){
+                    charts[i].updateStat();
+                }
+                let x = (cWidth*2/3)+cWidth/11;
+                let y = (cHeight*1/6)+(this.fontSize*i*2);
+
+                charts[i].display(x,y,this.fontSize*2);
+            }
+        }//displayCharts
+
+        function displayStory(){
+            this.ctx = board.context;
+            let typewriter = [sStart[0],sStart[1]+scrollAmt];
+
+            this.ctx.fillStyle = "#03041a";
+            let fontSize = cHeight/40;
+            this.ctx.textBaseline = "middle";
+            this.ctx.textAlign = "left";
+            this.ctx.font = "500 "+ fontSize+'px Nunito';
+
+            for(i = 0;i<story.length;i++){
+                for(n = 0;n<story[i].length;n++){
+                    if(n==0){
+                        this.ctx.font = "700 "+ fontSize+'px Nunito';
+                    }
+                    else{
+                        this.ctx.font = "500 "+ fontSize+'px Nunito';
+                    }
+                    this.ctx.fillText(story[i][n],typewriter[0],typewriter[1]);
+                    typewriter[1]+=fontSize*1.25;
+                }
+            }
+            
+            sLength = typewriter[1]-(cHeight*0.14);
+
+
+            this.ctx.fillStyle = 'rgba(161, 161, 161, 5)';
+            fillRoundRect(cWidth*.595,cHeight*0.14,cWidth*0.01,cHeight*0.57,cHeight/40);
+        }//displayStory
+
+
+        function ageUp(){
+            age++;
+
+            if(age<100){
+                charts[0].changeStat(100-(deathRates[age]*100));
+            }
+
+            let d = 1000-(charts[0].stat*10);
+            let n = getRandomInt(0,1000);
+            if(n<d){
+                dead = true;
+            }
+
+            if(dead!=true){
+                this.recap = [];
+                this.recap.push("Age "+age);
+                if(age == 1){
+                    this.recap.push(name + " was born!")
+                }
+                story.push(this.recap);
+            }
+
+            console.log(sLength);
+        }//ageUp
+
+
+
+        class Chart{
+            constructor(name, stat){
+                this.name = name;
+                this.stat = stat;
+                this.animStat = stat;
+            }//constructor
+
+            display(x,y,sp){
+                this.ctx = board.context;
+                this.ctx.fillStyle = "#03041a";
+                this.ctx.textAlign = "right";
+                this.ctx.font = "800 "+ sp/2 + "px Nunito";
+                this.ctx.fillText(this.name,x,y);
+
+                this.ctx.fillStyle = "#dedede";
+                fillRoundRect(x+sp/3,y-sp/8,(cWidth*3/22),sp/4,cWidth/80)
+                if(this.stat<25){
+                    this.ctx.fillStyle = lerpColor([232, 19, 19],[250, 200, 2],this.stat*.01)
+                }
+                else{
+                    this.ctx.fillStyle = lerpColor([250, 200, 2],[36, 245, 0],(this.stat*0.01)-0.25);
+                }
+                fillRoundRect(x+sp/3,y-sp/8,(cWidth*3/22)*this.animStat*0.01,sp/4,cWidth/80)
+
+                this.ctx.fillStyle = "#03041a";
+                this.ctx.textAlign = "left";
+                this.ctx.fillText(this.animStat.toFixed(1)+"%",x+(cWidth*3/22)+sp/2,y);
+            }//display
+
+            updateStat(newStat){
+                this.animStat+=(this.stat-this.animStat)/8;
+                if((this.animStat-this.stat)*(this.animStat-this.stat)<=3){
+                    this.animStat = this.stat;
+                }
+            }//updateStat
+
+            changeStat(newStat){
+                this.stat = roundToNearestTenth(newStat);
+            }//changeStat
+        }//Chart class
+
+        class Human{
+
+
+
+        }//Human
+
+        board.c.addEventListener('mousemove', (event) => {
+            const rCanvas = board.c.getBoundingClientRect();
+            const mouseX = event.clientX - rCanvas.left;
+            const mouseY = event.clientY - rCanvas.top;
+            if (dead == false && getDistance(ageButton[0],ageButton[1],mouseX,mouseY)<cHeight*0.07*2){
+                ageButton[2] = "#45b54a";
+            }
+            else{
+                ageButton[2] = "#0aad36";
+            }
+        });//mouse hovering
+
+        board.c.addEventListener('click', (event) => {
+            const rCanvas = board.c.getBoundingClientRect();
+            const mouseX = event.clientX - rCanvas.left;
+            const mouseY = event.clientY - rCanvas.top;
+            if (dead == false && getDistance(ageButton[0],ageButton[1],mouseX,mouseY)<cHeight*0.07*2){
+                ageUp();
+            }
+        });//mouse click
+
+        board.c.addEventListener('wheel', (event) => {
+            const rCanvas = board.c.getBoundingClientRect();
+            const mouseX = event.clientX - rCanvas.left;
+            const mouseY = event.clientY - rCanvas.top;
+
+            event.preventDefault();
+
+            const delta = Math.sign(event.deltaY);
+
+
+            if(mouseX>0&&mouseX<cWidth*(2/3)&&mouseY>cHeight*0.138&&mouseY<cHeight*0.75){
+                let amt = cHeight/100;
+                if (delta < 0) {//down
+                    if(sLength>scrollAmt+cHeight*0.64){
+                        scrollAmt+=amt;
+                    }
+                }
+                else {//up
+                    scrollAmt-=amt;
+                    if(scrollAmt <= 0){
+                        scrollAmt = 0;
+                    }
+                }
+            }
+        });//scroll wheel
+
+
+
+
+
+        //Helper Functions
+        function fillRoundRect(x,y,w,l,r){
+            this.ctx = board.context;
+
+            this.ctx.beginPath();
+            this.ctx.roundRect(x,y,w,l,r);
+            this.ctx.fill();
+            this.ctx.closePath();
+
+        }//fillRoundRect - makes a filled rounded rectangle
+
+        function fillCircle(x,y,r){
+            this.ctx = board.context;
+
+            this.ctx.beginPath();
+            this.ctx.arc(x,y,r,0,2*Math.PI);
+            this.ctx.fill();
+            this.ctx.closePath();
+        }//fillCircle - fills a circle..
+
+        function lerp(x1,x2,v){
+            return x1 * (1 - v) + x2 * v;
+        }//lerp - gets an intermediate value between x1 and x2 based on v. v=1 will return x2
+
+        function lerpColor(color1, color2, amt) {
+            let r = lerp(color1[0], color2[0], amt);
+            let g = lerp(color1[1], color2[1], amt);
+            let b = lerp(color1[2], color2[2], amt);
+
+            return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+        }//lerpColor
+
+        function getRandomInt(min, max) {
+            const minCeiled = Math.ceil(min);
+            const maxFloored = Math.floor(max);
+            return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+        }//getRandomInt gets random integer with exclusive max and inclusive minimum
+
+        function roundToNearestTenth(num) {
+            return Math.round(num * 10)/10;
+        }//roundToNearestTenth
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        // First, start by splitting all of our text into words, but splitting it into an array split by spaces
+        let words = text.split(' ');
+        let line = ''; // This will store the text of the current line
+        let testLine = ''; // This will store the text when we add a word, to test if it's too long
+        let lineArray = []; // This is an array of lines, which the function will return
+
+        // Lets iterate over each word
+        for(var n = 0; n < words.length; n++) {
+            // Create a test line, and measure it..
+            testLine += `${words[n]} `;
+            let metrics = ctx.measureText(testLine);
+            let testWidth = metrics.width;
+            // If the width of this test line is more than the max width
+            if (testWidth > maxWidth && n > 0) {
+                // Then the line is finished, push the current line into "lineArray"
+                lineArray.push([line, x, y]);
+                // Increase the line height, so a new line is started
+                y += lineHeight;
+                // Update line and test line to use this word as the first word on the next line
+                line = `${words[n]} `;
+                testLine = `${words[n]} `;
+            }
+            else {
+                // If the test line is still less than the max width, then add the word to the current line
+                line += `${words[n]} `;
+            }
+            // If we never reach the full max width, then there is only one line.. so push it into the lineArray so we return something
+            if(n === words.length - 1) {
+                lineArray.push([line, x, y]);
+            }
+        }
+        // Return the line array
+        return lineArray;
+    }//wrapText not by me...from the intertrash
+
+    function getDistance(x1, y1, x2, y2) {
+        const xDiff = x2 - x1;
+        const yDiff = y2 - y1;
+        return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+    }//getDistance
+    </script>
+
+</body>
+</html>

@@ -63,7 +63,7 @@ function parse(file, callback) {
     });
   
     return {
-      categories: ['U', 'P', 'WD'],
+      categories: ['Underdeveloped', 'Proficient', 'Well developed'],
       values: [counts.U, counts.P, counts.WD]
     };
   }
@@ -111,33 +111,40 @@ function parse(file, callback) {
       chart: 
       {
         type: 'bar',
-        height: 350
+        height: 500,
+        fontFamily: 'Avenir, bold'  
       },
+      colors: ["#fcdb00"],
       series: 
-      [{
-        name: 'HVI Score',
-        data: data.values
-      }],
+      [
+        {
+          name: 'HIV Score',
+          data: data.values
+        }
+    ],
       xaxis: 
       {
         categories: data.categories,
         title: 
         {
           text: 'Neighborhood'
-        }
+        },
+        fontFamily: 'Avenir, bold'  
       },
       yaxis: 
       {
         title: 
         {
-          text: 'HVI'
-        }
+          text: 'HIV',
+        },
+        fontFamily: 'Avenir, bold'  
       },
       title: 
       {
         min: 0,
         max: 1,
-        text: 'Scores'
+        text: 'Scores',
+        fontFamily: 'Avenir, bold',
       }
     };
 
@@ -147,62 +154,64 @@ function parse(file, callback) {
 
   //would love to have this as a multi axis graph
   //so hiv to aid prob is more visible, but itsnot cooperating
-    function hivProb(data) {
-      //debug
-      console.log("Rendering chart with:", data);
-      const options = 
+  function hivProb(data) {
+    //debug
+    console.log("Rendering chart with:", data);
+    const options = 
+    {
+      chart: 
       {
-        chart: 
+        type: 'line',
+        height: 350,
+        stacked: false,
+        fontFamily: 'Avenir, bold'  
+      },
+      colors:
+      [
+        "#4077ed", "#fcdb00"
+      ],
+      stroke: 
+      {
+        width: [4, 4]
+      },
+      series: 
+      [
         {
-          type: 'line',
-          height: 350,
-          stacked: false
+        name: 'HIV',
+        data: data.values1,
         },
-        colors:
-        [
-          "#FF1654", "#247BA0"
-        ],
-        stroke: 
         {
-          width: [4, 4]
-        },
-        series: 
-        [
-          {
-          name: 'HIV',
-          data: data.values1,
-          float_precision: 1
-          },
-          {
-            name: 'HIV to AIDS',
-            data: data.values2,
-            float_precision: 1
-          }
-        ],
-        xaxis: 
-        {
-          categories: data.categories,
-          title: 
-          {
-            text: 'Neighborhood'
-          }
-        },
-        yaxis: 
-        {
-          title: 
-          {
-            text: 'Probability'
-          }
-        },
+          name: 'HIV to AIDS',
+          data: data.values2,
+        }
+      ],
+      xaxis: 
+      {
+        categories: data.categories,
         title: 
         {
-          text: 'HIV and HVI to AID Scores by Neighborhood'
-        }
-      };
-  
-    const chart = new ApexCharts(document.querySelector("#aidsChart"), options);
-    chart.render();
-    }
+          text: 'Neighborhood'
+        },
+        fontFamily: 'Avenir, bold'  
+      },
+      yaxis: 
+      {
+        title: 
+        {
+          text: 'Probability'
+        },
+        fontFamily: 'Avenir, bold'  
+      },
+      title: 
+      {
+        text: 'HIV and HIV to AID Scores by Neighborhood',
+        fontFamily: 'Avenir, bold'  
+      }
+    };
+
+  const chart = new ApexCharts(document.querySelector("#aidsChart"), options);
+  chart.render();
+  }
 
     function total(data) {
       //debug
@@ -212,8 +221,10 @@ function parse(file, callback) {
         chart: 
         {
           type: 'bar',
-          height: 500
+          height: 350,
+          fontFamily: 'Avenir, bold'  
         },
+        colors: ["#fcdb00"],
         series: 
         [{
           name: 'Amount of Locations',
@@ -225,7 +236,8 @@ function parse(file, callback) {
           title: 
           {
             text: 'Overall Ratings'
-          }
+          },
+          fontFamily: 'Avenir, bold'  
         },
         yaxis: 
         {
@@ -234,11 +246,13 @@ function parse(file, callback) {
           title: 
           {
             text: 'Amount of Locations'
-          }
+          },
+          fontFamily: 'Avenir, bold'  
         },
         title: 
         {
-          text: 'Location Ratings Distribution'
+          text: 'Location Ratings Distribution',
+          fontFamily: 'Avenir, bold'  
         }
       };
   
@@ -247,6 +261,7 @@ function parse(file, callback) {
     }
 
     //unstylized and way takes wayyyy too long to render
+    // okay with styling it doesn't render?
     // function each(data) {
     //   const options = {
     //     chart: 
@@ -298,6 +313,6 @@ function parse(file, callback) {
     //     colors: ['#FF1654', '#247BA0', '#FFDD00'],
     //   };
     
-    //   const chart = new ApexCharts(document.querySelector("#chart"), options);
+    //   const chart = new ApexCharts(document.querySelector("#eachchart"), options);
     //   chart.render();
     // }
