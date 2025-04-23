@@ -119,7 +119,7 @@ function parse(file, callback) {
       [
         {
           name: 'HIV Score',
-          data: data.values
+          data: data.values,
         }
     ],
       xaxis: 
@@ -127,7 +127,11 @@ function parse(file, callback) {
         categories: data.categories,
         title: 
         {
-          text: 'Neighborhood'
+          text: 'Neighborhood',
+          style: {
+            color: "#ffffff"
+          }
+
         },
         fontFamily: 'Avenir, bold'  
       },
@@ -136,8 +140,12 @@ function parse(file, callback) {
         title: 
         {
           text: 'HIV',
+          style: {
+            color: "#ffffff"
+          }
         },
-        fontFamily: 'Avenir, bold'  
+        fontFamily: 'Avenir, bold',
+          
       },
       title: 
       {
@@ -145,6 +153,9 @@ function parse(file, callback) {
         max: 1,
         text: 'Scores',
         fontFamily: 'Avenir, bold',
+        style: {
+          color: "#ffffff"
+        }
       }
     };
 
@@ -164,7 +175,7 @@ function parse(file, callback) {
         type: 'line',
         height: 350,
         stacked: false,
-        fontFamily: 'Avenir, bold'  
+        fontFamily: 'Avenir, bold'
       },
       colors:
       [
@@ -190,22 +201,31 @@ function parse(file, callback) {
         categories: data.categories,
         title: 
         {
-          text: 'Neighborhood'
+          text: 'Neighborhood',
+          style: {
+            color: "#ffffff"
+          }
         },
-        fontFamily: 'Avenir, bold'  
+        fontFamily: 'Avenir, bold',
       },
       yaxis: 
       {
         title: 
         {
-          text: 'Probability'
+          text: 'Probability',
+          style: {
+            color: "#ffffff"
+          }
         },
-        fontFamily: 'Avenir, bold'  
+        fontFamily: 'Avenir, bold',
       },
       title: 
       {
         text: 'HIV and HIV to AID Scores by Neighborhood',
-        fontFamily: 'Avenir, bold'  
+        fontFamily: 'Avenir, bold',
+        style: {
+          color: "#ffffff"
+        }
       }
     };
 
@@ -222,7 +242,7 @@ function parse(file, callback) {
         {
           type: 'bar',
           height: 350,
-          fontFamily: 'Avenir, bold'  
+          fontFamily: 'Avenir, bold'
         },
         colors: ["#fcdb00"],
         series: 
@@ -235,7 +255,10 @@ function parse(file, callback) {
           categories: data.categories,
           title: 
           {
-            text: 'Overall Ratings'
+            text: 'Overall Ratings',
+            style: {
+              color: "#ffffff"
+            }
           },
           fontFamily: 'Avenir, bold'  
         },
@@ -245,14 +268,20 @@ function parse(file, callback) {
           max: 900,
           title: 
           {
-            text: 'Amount of Locations'
+            text: 'Amount of Locations',
+            style: {
+              color: "#ffffff"
+            }
           },
-          fontFamily: 'Avenir, bold'  
+          fontFamily: 'Avenir, bold'
         },
         title: 
         {
           text: 'Location Ratings Distribution',
-          fontFamily: 'Avenir, bold'  
+          fontFamily: 'Avenir, bold',
+          style: {
+            color: "#ffffff"
+          } 
         }
       };
   
