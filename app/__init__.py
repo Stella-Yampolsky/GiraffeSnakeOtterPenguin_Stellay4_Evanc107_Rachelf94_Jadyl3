@@ -64,7 +64,7 @@ def login():
 
 @app.route('/profile/<int:user_id>')
 def search(user_id):
-    return render_template('profile.html', username=session["username"], playtable=gamesInfoToTable(getGamesInfo(session["username"]))) #change later
+    return render_template('profile.html', username=session["username"], playtable=gamesInfoToTable(getGamesInfo(user_id)), score = getScoreFromID(user_id), numGames = getnumPlaysFromUsername(session["username"])) #change later
 
 @app.route('/profile')
 def self():

@@ -13,16 +13,37 @@
       <script src="https://cdn.tailwindcss.com"></script>
       <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <link rel="stylesheet" href="../static/css/bg.css">
+      <style>
+        #innards {
+          padding: 20px
+        }
+        h1, h3 {
+          font-size: 30px;
+          color: white;
+        }
+        table, th, td {
+          color: white;
+          border: 1px solid;
+          width: 70em;
+        }
+      </style>
   </head>
   <body>
     <!-- nav + bg -->
     {% extends 'base.html' %}
     {% block content %}
 
-    <h1>{{username}}</h1>
-    {{playtable | safe}}
+    <div id="innards">
+      <h1>Username: {{username}}</h1>
+      <br>
+      <h3>Top Score: {{score}}</h3>
+      <br>
+      <h3>Number of Games: {{numGames}}</h3>
+      <br>
+      {{playtable | safe}}
 
-    {% endblock %}
+      {% endblock %}
+    </div>
   </body>
 
 </html>
