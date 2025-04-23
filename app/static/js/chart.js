@@ -68,40 +68,40 @@ function parse(file, callback) {
     };
   }
 
-  function eachFormat(raw) 
-  {
-    const data = raw.filter(row => 
-      !isNaN(parseFloat(row.Zip)) && 
-      row.LocationCode && 
-      row.OverallRating
-    );
-    const zipCounts = {};
-    data.forEach(row => 
-      {
-      const zip = row.Zip;
-      const rating = row.OverallRating;
-      if (!zipCounts[zip]) 
-        {
-        zipCounts[zip] = { U: 0, P: 0, WD: 0 };
-         }
-      if (rating === "U" || rating === "P" || rating === "WD") 
-        {
-        zipCounts[zip][rating]++;
-         }
-    });
+  // function eachFormat(raw) 
+  // {
+  //   const data = raw.filter(row => 
+  //     !isNaN(parseFloat(row.Zip)) && 
+  //     row.LocationCode && 
+  //     row.OverallRating
+  //   );
+  //   const zipCounts = {};
+  //   data.forEach(row => 
+  //     {
+  //     const zip = row.Zip;
+  //     const rating = row.OverallRating;
+  //     if (!zipCounts[zip]) 
+  //       {
+  //       zipCounts[zip] = { U: 0, P: 0, WD: 0 };
+  //        }
+  //     if (rating === "U" || rating === "P" || rating === "WD") 
+  //       {
+  //       zipCounts[zip][rating]++;
+  //        }
+  //   });
 
-    const categories = Object.keys(zipCounts);
-    const valuesU = categories.map(zip => zipCounts[zip].U);
-    const valuesP = categories.map(zip => zipCounts[zip].P);
-    const valuesWD = categories.map(zip => zipCounts[zip].WD);
+  //   const categories = Object.keys(zipCounts);
+  //   const valuesU = categories.map(zip => zipCounts[zip].U);
+  //   const valuesP = categories.map(zip => zipCounts[zip].P);
+  //   const valuesWD = categories.map(zip => zipCounts[zip].WD);
   
-    return {
-      categories: categories,
-      valuesU: valuesU,
-      valuesP: valuesP,
-      valuesWD: valuesWD
-    };
-  }
+  //   return {
+  //     categories: categories,
+  //     valuesU: valuesU,
+  //     valuesP: valuesP,
+  //     valuesWD: valuesWD
+  //   };
+  // }
   
   function hivByHood(data) {
     //debug
@@ -261,57 +261,58 @@ function parse(file, callback) {
     }
 
     //unstylized and way takes wayyyy too long to render
-    function each(data) {
-      const options = {
-        chart: 
-        {
-          type: 'bar',
-          height: 350
-        },
-        plotOptions: 
-        {
-          bar: {
-            columnWidth: '50%',
-            distributed: true,
-            horizontal: false
-          }
-        },
-        series: 
-        [
-          {
-            name: 'U',
-            data: data.valuesU
-          },
-          {
-            name: 'P',
-            data: data.valuesP
-          },
-          {
-            name: 'WD',
-            data: data.valuesWD
-          }
-        ],
-        xaxis: 
-        {
-          categories: data.categories,
-          title: 
-          {
-            text: 'Zip Code'
-          }
-        },
-        yaxis: {
-          title: 
-          {
-            text: 'Number of Ratings'
-          }
-        },
-        title: 
-        {
-          text: 'Ratings Distribution by Zip Code'
-        },
-        colors: ['#FF1654', '#247BA0', '#FFDD00'],
-      };
+    // okay with styling it doesn't render?
+    // function each(data) {
+    //   const options = {
+    //     chart: 
+    //     {
+    //       type: 'bar',
+    //       height: 350
+    //     },
+    //     plotOptions: 
+    //     {
+    //       bar: {
+    //         columnWidth: '50%',
+    //         distributed: true,
+    //         horizontal: false
+    //       }
+    //     },
+    //     series: 
+    //     [
+    //       {
+    //         name: 'U',
+    //         data: data.valuesU
+    //       },
+    //       {
+    //         name: 'P',
+    //         data: data.valuesP
+    //       },
+    //       {
+    //         name: 'WD',
+    //         data: data.valuesWD
+    //       }
+    //     ],
+    //     xaxis: 
+    //     {
+    //       categories: data.categories,
+    //       title: 
+    //       {
+    //         text: 'Zip Code'
+    //       }
+    //     },
+    //     yaxis: {
+    //       title: 
+    //       {
+    //         text: 'Number of Ratings'
+    //       }
+    //     },
+    //     title: 
+    //     {
+    //       text: 'Ratings Distribution by Zip Code'
+    //     },
+    //     colors: ['#FF1654', '#247BA0', '#FFDD00'],
+    //   };
     
-      const chart = new ApexCharts(document.querySelector("#eachchart"), options);
-      chart.render();
-    }
+    //   const chart = new ApexCharts(document.querySelector("#eachchart"), options);
+    //   chart.render();
+    // }
