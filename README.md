@@ -23,8 +23,9 @@ GiraffeSnakeOtterPenguin presents BitStrife!! Our web app aims to simulate a New
   d. Enter ```http://127.0.0.1:5000``` in your web browser to access the web app.
 
 ### FEATURE SPOTLIGHT
-* blah blah in file ___
-* yadda yadda at line x in file foo...
+* uses multiple nyc gov databases
+* Javascript canvas used to run the game
+* charts in /charts
 
 ### KNOWN BUGS/ISSUES
 * must run python3 app/\_\_init__.py to utilize databases correctly
