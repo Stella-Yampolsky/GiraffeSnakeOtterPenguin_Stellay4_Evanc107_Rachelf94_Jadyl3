@@ -21,30 +21,6 @@
     {% extends 'base.html' %}
     {% block content %}
     leaderboard :D
-    <div id="chart"></div>
-
-    <script>
-      // const healthData =
-      // {poop: [1,2,3,4]}
-      const options = {
-        chart: {
-          type: 'line',
-          height: 350
-        },
-        series: [{
-          name: "Health",
-          data: [2,3,4,5]
-        }],
-        xaxis: {
-          type: 'category'
-        }
-      };
-
-      
-
-      const chart = new ApexCharts(document.querySelector("#chart"), options);
-      chart.render();
-    </script>
     {% endblock %}
   </body>
 </html>
