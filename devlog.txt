@@ -102,6 +102,9 @@ stellaY -- 2025-04-22 17:37
 jadyL -- 2025-04-21 21:33
     fix sitedb functions to get profile working properly
 
+jadyL -- 2025-04-21 11:50
+    fix sitedb functions again, dropdown fix, w database
+
 DESIGN REVISIONS THUS FAR:
 ------------------------------------
 -changed datasets

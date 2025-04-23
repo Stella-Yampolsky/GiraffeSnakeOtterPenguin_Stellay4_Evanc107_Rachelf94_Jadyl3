@@ -105,7 +105,7 @@ def deleteUsers():
 def createPlays():
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    command = '''CREATE TABLE IF NOT EXISTS plays (user_id INTEGER, player_id INTEGER, name TEXT, age INTEGER, health INTEGER,
+    command = '''CREATE TABLE IF NOT EXISTS plays (user_id INTEGER, play_id INTEGER, name TEXT, age INTEGER, health INTEGER,
                 mental_health INTEGER, address TEXT,
                 alcoholism INTEGER, wage INTEGER, spouse INTEGER, children INTEGER, education INTEGER)'''
     c.execute(command)
@@ -113,7 +113,8 @@ def createPlays():
 def addPlay(username, name, address):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("INSERT INTO plays (user_id, player_id, name, age, health, mental_health, address, alcoholism, wage, spouse, children, education) VALUES (?, ?, ?)", (getIDFromUsername(username), getnumPlaysFromUsername(username) + 1, name, 0, 0, 0, address, 0, 0, 0, 0, 0))
+    c.execute("INSERT INTO plays (user_id, play_id, name, age, health, mental_health, address, alcoholism, wage, spouse, children, education) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (getIDFromUsername(username), getnumPlaysFromUsername(username) + 1, name, 0, 0, 0, address, 0, 0, 0, 0, 0))
+    db.commit()
     incrementnumPlays(username)
     db.commit()
 
@@ -122,63 +123,64 @@ def incrementAge(username, pid):
     c = db.cursor()
     if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
         return
-    c.execute("UPDATE plays SET age=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, getAge(username, pid) + 1))
+    curr = getAge(username, pid) + 1
+    c.execute("UPDATE plays SET age=? WHERE user_id=? AND play_id=?", (curr + 1, getIDFromUsername(username), pid))
     db.commit()
 def changeHealth(username, pid, change):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
         return
-    c.execute("UPDATE plays SET health=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, getHealth(username, pid) + change))
+    c.execute("UPDATE plays SET health=? WHERE user_id=? AND play_id=?", (getHealth(username, pid) + change, getIDFromUsername(username), pid, ))
     db.commit()
 def changeMentalHealth(username, pid, change):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
         return
-    c.execute("UPDATE plays SET mental_health=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, getAge(username, pid) + 1))
+    c.execute("UPDATE plays SET mental_health=? WHERE user_id=? AND play_id=?", (getAge(username, pid) + 1, getIDFromUsername(username), pid, ))
     db.commit()
 def changeAddress(username, pid, newValue):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
         return
-    c.execute("UPDATE plays SET mental_health=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, newValue))
+    c.execute("UPDATE plays SET mental_health=? WHERE user_id=? AND play_id=?", (newValue, getIDFromUsername(username), pid, ))
     db.commit()
 def changeAlcoholism(username, pid, newValue):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
         return
-    c.execute("UPDATE plays SET alcoholism=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, newValue))
+    c.execute("UPDATE plays SET alcoholism=? WHERE user_id=? AND play_id=?", (newValue, getIDFromUsername(username), pid, ))
     db.commit()
 def changeWage(username, pid, newValue):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
         return
-    c.execute("UPDATE plays SET wage=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, newValue))
+    c.execute("UPDATE plays SET wage=? WHERE user_id=? AND play_id=?", (newValue, getIDFromUsername(username), pid))
     db.commit()
 def changeMaritialStatus(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
         return
-    c.execute("UPDATE plays SET spouse=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, (getMaritialStatus(username, pid) + 1)%2))
+    c.execute("UPDATE plays SET spouse=? WHERE user_id=? AND play_id=?", ((getMaritialStatus(username, pid) + 1)%2, getIDFromUsername(username), pid, ))
     db.commit()
 def changeChildCount(username, pid, change):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
         return
-    c.execute("UPDATE plays SET children=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, getChildCount(username, pid) + change))
+    c.execute("UPDATE plays SET children=? WHERE user_id=? AND play_id=?", ( getChildCount(username, pid) + change, getIDFromUsername(username), pid,))
     db.commit()
 def incrementEdu(username, pid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     if (c.execute("SELECT 1 FROM plays WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid))).fetchone() == None:
         return
-    c.execute("UPDATE plays SET education=? WHERE user_id=? AND play_id=?", (getIDFromUsername(username), pid, getEducation(username, pid) + 1))
+    c.execute("UPDATE plays SET education=? WHERE user_id=? AND play_id=?", (getEducation(username, pid) + 1, getIDFromUsername(username), pid, ))
     db.commit()
 
 #accessor functions
