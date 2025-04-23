@@ -13,8 +13,8 @@
     {
         parse("{{ url_for('static', filename='neighborhood_hvi_rankings.csv') }}", (data) =>
             { 
-            const chartData = hivByHoodFormat(data);
-            hivByHood(chartData);
+            const chartData = hviByHoodFormat(data);
+            hviByHood(chartData);
             }
             );
     });

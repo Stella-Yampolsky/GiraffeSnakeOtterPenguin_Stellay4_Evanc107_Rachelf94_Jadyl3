@@ -56,8 +56,20 @@ Pushed one modified csv file to main, contains probabilities of contracting HIV 
 jadyL -- 2025-04-07 10:20
     found more databases to use
 
+moyoF -- 2025-04-07 11:47
+more navbar handaling
+
 stellaY -- 2025-04-07 2:27
 Pushed modified hvi rankings file, contains hvi rankings for each neighborhood
+
+moyoF -- 2025-04-08 11:45
+bettering my understanding of apex charts
+
+moyoF -- 2025-04-09 11:46
+more templating stuff
+
+moyoF -- 2025-04-09 11:47
+got the egg gif working
 
 jadyL -- 2025-04-21 11:37
     login fixed

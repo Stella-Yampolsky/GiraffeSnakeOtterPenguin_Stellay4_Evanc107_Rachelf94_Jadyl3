@@ -17,7 +17,7 @@ function parse(file, callback) {
   }
 
   
-  function hivByHoodFormat(raw) {
+  function hviByHoodFormat(raw) {
     // this gets rid of the empty line at the end of CSV files, if there is one added by 
     // the text editor. Apex Charts get confused with empty data
     const data = raw.filter(row => 
@@ -103,7 +103,7 @@ function parse(file, callback) {
   //   };
   // }
   
-  function hivByHood(data) {
+  function hviByHood(data) {
     //debug
     console.log("Rendering chart with:", data);
     const options = 
@@ -118,7 +118,7 @@ function parse(file, callback) {
       series: 
       [
         {
-          name: 'HIV Score',
+          name: 'HVI Score',
           data: data.values,
         }
     ],
@@ -139,7 +139,7 @@ function parse(file, callback) {
       {
         title: 
         {
-          text: 'HIV',
+          text: 'HVI',
           style: {
             color: "#ffffff"
           }
@@ -151,7 +151,7 @@ function parse(file, callback) {
       {
         min: 0,
         max: 1,
-        text: 'Scores',
+        text: 'Heat Vulnerability Index Score',
         fontFamily: 'Avenir, bold',
         style: {
           color: "#ffffff"
@@ -221,7 +221,7 @@ function parse(file, callback) {
       },
       title: 
       {
-        text: 'HIV and HIV to AID Scores by Neighborhood',
+        text: 'HIV & AID Probability by United Hospital Fund Neighborhood Of Residence',
         fontFamily: 'Avenir, bold',
         style: {
           color: "#ffffff"
@@ -247,7 +247,7 @@ function parse(file, callback) {
         colors: ["#fcdb00"],
         series: 
         [{
-          name: 'Amount of Locations',
+          name: 'Number of Schools',
           data: data.values
         }],
         xaxis: 
@@ -268,7 +268,7 @@ function parse(file, callback) {
           max: 900,
           title: 
           {
-            text: 'Amount of Locations',
+            text: 'Number of Schools',
             style: {
               color: "#ffffff"
             }
@@ -277,7 +277,7 @@ function parse(file, callback) {
         },
         title: 
         {
-          text: 'Location Ratings Distribution',
+          text: 'School Rating Distribution',
           fontFamily: 'Avenir, bold',
           style: {
             color: "#ffffff"
