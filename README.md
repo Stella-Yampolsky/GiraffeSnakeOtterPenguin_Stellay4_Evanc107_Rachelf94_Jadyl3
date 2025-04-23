@@ -18,9 +18,8 @@ GiraffeSnakeOtterPenguin presents BitStrife!! Our web app aims to simulate a New
   d. Deactivate the virtual environment with ```$ deactivate```.
 3. **Running the Web App on Local Host**  
   a. Activate the virtual environment.  
-  b. Enter the app folder with ```$ cd app``` while in this project's directory.  
-  c. Run the flask app using ```$ python3 __init__.py``` or ```$ py __init__.py``` for Windows.  
-  d. Enter ```http://127.0.0.1:5000``` in your web browser to access the web app.
+  b. Run the flask app using ```$ python3 app/__init__.py``` or ```$ py app\__init__.py``` for Windows.  
+  c. Enter ```http://127.0.0.1:5000``` in your web browser to access the web app.
 
 ### FEATURE SPOTLIGHT
 * uses multiple nyc gov databases
