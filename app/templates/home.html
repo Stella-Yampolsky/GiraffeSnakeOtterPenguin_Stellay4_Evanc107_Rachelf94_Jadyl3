@@ -14,7 +14,7 @@
       <script src="https://cdn.tailwindcss.com"></script>
       <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-      <script src="/static/js/chart.js?v=1.1" defer></script>
+      <script src="/static/js/chart.js" defer></script>
       <link rel="stylesheet" href="../static/css/bg.css">
       <link rel="stylesheet" href="../static/css/theme.css">
   </head>
@@ -33,15 +33,6 @@
         Play Bit Strife!
       </button>
     </div>
-    <div id="chart"></div>
-    <script>
-      parse("../static/js/hiv_probabilities_2013.csv", (data) =>
-          { 
-            const chartData = format(data);
-            render(chartData);
-          }
-            );
-    </script>
     {% endblock %}
   </body>
 

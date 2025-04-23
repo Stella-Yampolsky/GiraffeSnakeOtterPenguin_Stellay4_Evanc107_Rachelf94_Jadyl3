@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+    {% block content %}
+    <!-- seperate divs or they like
+    hop ontop of one anotehr -->
+    <div id="hoodChart"></div>
+    <div id="aidsChart"></div>
+    <div id="rateChart"></div>
+    <script>
+    window.addEventListener('load', function () 
+    {
+        parse("{{ url_for('static', filename='neighborhood_hvi_rankings.csv') }}", (data) =>
+            { 
+            const chartData = hivByHoodFormat(data);
+            hivByHood(chartData);
+            }
+            );
+
+        parse("{{ url_for('static', filename='hiv_probabilities_2013.csv') }}", (data) =>
+        { 
+            const chartData = hivProbFormat(data);
+            hivProb(chartData);
+        }
+            );
+    });
+    </script>
+    <br>
+    <script>
+        window.addEventListener('load', function () 
+        {
+        parse("{{ url_for('static', filename='hiv_probabilities_2013.csv') }}", (data) =>
+        { 
+            const chartData = hivProbFormat(data);
+            hivProb(chartData);
+        }
+            );
+        });
+    </script>
+    <br>
+    <script>
+        window.addEventListener('load', function () 
+        {
+        parse("{{ url_for('static', filename='schools.csv') }}", (data) =>
+        { 
+            const chartData = totalFormat(data);
+            total(chartData);
+        }
+            );
+        });
+    </script>
+    <!-- <br>
+    <script>
+        window.addEventListener('load', function () 
+        {
+        parse("{{ url_for('static', filename='schools.csv') }}", (data) =>
+        { 
+            const chartData = eachFormat(data);
+            each(chartData);
+        }
+            );
+        });
+    </script>
+    {% endblock %}

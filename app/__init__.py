@@ -30,6 +30,12 @@ def leaderboard():
         return redirect(url_for('login'))
     return render_template('leaderboard.html')
 
+@app.route('/charts')
+def charts():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    return render_template('charts.html')
+
 @app.route("/login", methods=["GET", "POST"])# will code registering and logging forms later
 def login():
     createUsers()
